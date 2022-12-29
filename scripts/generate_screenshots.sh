@@ -94,7 +94,7 @@ function run() {
 	node ./scripts/screenshot-server.js $1 &
 	echo $! > ss-server.pid
 	ipAddr=$(getActiveNetwork)
-	~/Library/Android/sdk/platform-tools/adb shell am instrument --no-window-animation -w \
+	adb shell am instrument --no-window-animation -w \
 		-e class net.skyscanner.backpack.docs.GenerateScreenshots \
 		-e screenshotServer $ipAddr \
 		net.skyscanner.backpack.test/$test_instrumentation_runner
