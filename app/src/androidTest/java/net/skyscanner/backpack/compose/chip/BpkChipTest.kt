@@ -48,7 +48,7 @@ class BpkChipTest : BpkSnapshotTest() {
   @Variants(BpkTestVariant.Default, BpkTestVariant.DarkMode)
   fun selected() {
     snap {
-      BpkChip(text = "Chip", selected = true)
+      BpkChip(text = "Chip", selected = false)
     }
   }
 
