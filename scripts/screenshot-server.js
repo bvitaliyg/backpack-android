@@ -42,6 +42,11 @@ const takeScreenshot = fileName => {
   });
 };
 
+var outDir = process.argv[2]
+if (outDir == null) {
+  outDir = "screenshots"
+}
+
 http
   .createServer(async (req, res) => {
     const { query: rawQuery } = url.parse(req.url);
@@ -51,7 +56,7 @@ http
 
     const [componentName, ...screenShotName] = query.name.split('_');
 
-    const folderPath = path.join(`${query.path}`, componentName, 'screenshots');
+    const folderPath = path.join(`${query.path}`, componentName, outDir);
     const screenShotPath = path.join(folderPath, `${screenShotName.join('_')}.png`);
 
     try {

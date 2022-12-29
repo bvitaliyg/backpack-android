@@ -91,7 +91,7 @@ function configDevice() {
 
 function run() {
 	echo "📸  Taking screenshots..."
-	node ./scripts/screenshot-server.js &
+	node ./scripts/screenshot-server.js $1 &
 	echo $! > ss-server.pid
 	ipAddr=$(getActiveNetwork)
 	~/Library/Android/sdk/platform-tools/adb shell am instrument --no-window-animation -w \
@@ -137,9 +137,9 @@ function generate() {
 
 	start
 	configDevice
-	run
+	run $1
 	finish
 }
 
 buildApp
-generate
+generate $1
