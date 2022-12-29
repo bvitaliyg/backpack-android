@@ -42,7 +42,7 @@ class BpkCardTest : BpkSnapshotTest() {
   @Test
   @Variants(BpkTestVariant.Default)
   fun largeCorner() = snap {
-    LargeCornersCardExample()
+    SmallCornersCardExample()
   }
 
   @Test
