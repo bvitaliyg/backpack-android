@@ -291,12 +291,12 @@ jobs:
 #            ~/.android/avd/*
 #            ~/.android/adb*
 #          key: avd-${{ env.api-level }}
-
-      - name: Delete existing screenshots
-        run: |
-          rm -rf docs/view/*/screenshots/*
-          rm -rf docs/compose/*/screenshots/*
-
+#
+#      - name: Delete existing screenshots
+#        run: |
+#          rm -rf docs/view/*/screenshots/*
+#          rm -rf docs/compose/*/screenshots/*
+#
 #      - name: create AVD and generate snapshot for caching
 #        if: steps.avd-cache-screenshots.outputs.cache-hit != 'true'
 #        uses: reactivecircus/android-emulator-runner@v2
