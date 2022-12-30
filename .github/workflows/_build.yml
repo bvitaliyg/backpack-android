@@ -301,7 +301,7 @@ jobs:
 #        if: steps.avd-cache-screenshots.outputs.cache-hit != 'true'
 #        uses: reactivecircus/android-emulator-runner@v2
 #        with:
-#          profile: Pixel
+#          profile: pixel
 #          sdcard-path-or-size: 512M
 #          api-level: ${{ env.screenshot-level }}
 #          target: default
@@ -315,7 +315,7 @@ jobs:
         id: screenshotsRecording
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          profile: Pixel
+          profile: pixel
           sdcard-path-or-size: 512M
           api-level: ${{ env.screenshot-level }}
           target: default
