@@ -302,7 +302,7 @@ jobs:
         with:
           profile: Pixel
           sdcard-path-or-size: 512M
-          api-level: 29
+          api-level: 31
           target: default
           arch: x86_64
           force-avd-creation: false
@@ -317,6 +317,8 @@ jobs:
           profile: Pixel
           sdcard-path-or-size: 512M
           api-level: 31
+          target: default
+          arch: x86_64
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
