@@ -23,6 +23,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.karumi.shot.ShotTestRunner
 
 @Suppress("unused")
@@ -36,6 +37,7 @@ class BpkTestRunner : ShotTestRunner() {
     super.onCreate(args)
   }
 
+  @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
   override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application =
     super.newApplication(cl, className, context).apply {
       registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
@@ -47,6 +49,12 @@ class BpkTestRunner : ShotTestRunner() {
         override fun onActivityStopped(activity: Activity) {}
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
           BpkTestVariant.current.applyToActivity(activity)
+          val flags: Int = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+          activity.window.decorView.systemUiVisibility = flags
         }
       })
     }
