@@ -302,7 +302,7 @@ jobs:
         with:
           profile: Pixel
           sdcard-path-or-size: 512M
-          api-level: 31
+          api-level: 29
           target: default
           arch: x86_64
           force-avd-creation: false
