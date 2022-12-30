@@ -12,6 +12,7 @@ env:
   flavour: oss
   config: debug
   api-level: 26
+  screenshot-level: 26
 
 jobs:
 
@@ -302,7 +303,7 @@ jobs:
         with:
           profile: Pixel
           sdcard-path-or-size: 512M
-          api-level: 31
+          api-level: ${{ env.screenshot-level }}
           target: default
           arch: x86_64
           force-avd-creation: false
@@ -316,7 +317,7 @@ jobs:
         with:
           profile: Pixel
           sdcard-path-or-size: 512M
-          api-level: 31
+          api-level: ${{ env.screenshot-level }}
           target: default
           arch: x86_64
           force-avd-creation: false
