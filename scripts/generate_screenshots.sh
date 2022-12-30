@@ -61,7 +61,8 @@ function checkStatus() {
 
 function buildApp() {
 	echo "🏢  Building the app..."
-	./gradlew :app:assembleOssDebug app:assembleOssAndroidTest
+	./gradlew :app:assembleOssDebug
+	./gradlew :app::app:assembleOssAndroidTest
 	checkStatus
 }
 
