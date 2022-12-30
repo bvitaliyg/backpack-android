@@ -12,7 +12,7 @@ env:
   flavour: oss
   config: debug
   api-level: 26
-  screenshot-level: 31
+  screenshot-level: 30
 
 jobs:
 
@@ -283,33 +283,33 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
-      - name: AVD cache
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ env.api-level }}
+#      - name: AVD cache
+#        uses: actions/cache@v3
+#        id: avd-cache-screenshots
+#        with:
+#          path: |
+#            ~/.android/avd/*
+#            ~/.android/adb*
+#          key: avd-${{ env.api-level }}
 
       - name: Delete existing screenshots
         run: |
           rm -rf docs/view/*/screenshots/*
           rm -rf docs/compose/*/screenshots/*
 
-      - name: create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          profile: Pixel
-          sdcard-path-or-size: 512M
-          api-level: ${{ env.screenshot-level }}
-          target: default
-          arch: x86_64
-          force-avd-creation: false
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: false
-          script: echo "Generated AVD snapshot for caching."
+#      - name: create AVD and generate snapshot for caching
+#        if: steps.avd-cache-screenshots.outputs.cache-hit != 'true'
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          profile: Pixel
+#          sdcard-path-or-size: 512M
+#          api-level: ${{ env.screenshot-level }}
+#          target: default
+#          arch: x86_64
+#          force-avd-creation: false
+#          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+#          disable-animations: false
+#          script: echo "Generated AVD snapshot for caching."
 
       - name: Screenshots recording
         id: screenshotsRecording
