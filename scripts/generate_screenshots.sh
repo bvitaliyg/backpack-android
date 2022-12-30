@@ -17,8 +17,8 @@
 
 
 test_instrumentation_runner='net.skyscanner.backpack.BpkTestRunner'
-tests_apk_path='app/build/outputs/apk/androidTest/internal/debug/app-internal-debug-androidTest.apk'
-app_apk_path='app/build/outputs/apk/internal/debug/app-internal-debug.apk'
+tests_apk_path='app/build/outputs/apk/androidTest/oss/debug/app-oss-debug-androidTest.apk'
+app_apk_path='app/build/outputs/apk/oss/debug/app-oss-debug.apk'
 app_package_name='net.skyscanner.backpack'
 
 docs_avd="bpk-droid-avd"
@@ -61,7 +61,7 @@ function checkStatus() {
 
 function buildApp() {
 	echo "🏢  Building the app..."
-	./gradlew :app:assembleInternalDebug app:assembleAndroidTest
+	./gradlew :app:assembleOssDebug app:assembleAndroidTest
 	checkStatus
 }
 
