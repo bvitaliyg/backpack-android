@@ -321,7 +321,7 @@ jobs:
           target: default
           arch: x86_64
           force-avd-creation: false
-          emulator-options: -no-snapshot-save -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu host -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             touch logcat_screenshots.log
