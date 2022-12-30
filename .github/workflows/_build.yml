@@ -266,7 +266,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     strategy:
       fail-fast: true
