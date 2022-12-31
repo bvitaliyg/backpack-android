@@ -12,7 +12,7 @@ env:
   flavour: oss
   config: debug
   api-level: 26
-  screenshot-level: 29
+  screenshot-level: 28
 
 jobs:
 
