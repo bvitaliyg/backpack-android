@@ -12,7 +12,7 @@ env:
   flavour: oss
   config: debug
   api-level: 26
-  screenshot-level: 30
+  screenshot-level: 29
 
 jobs:
 
@@ -321,7 +321,7 @@ jobs:
           target: default
           arch: x86_64
           force-avd-creation: false
-          emulator-options: -no-snapshot-save -gpu host -noaudio -no-boot-anim -camera-back none
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
             touch logcat_screenshots.log
