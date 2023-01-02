@@ -276,47 +276,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Screenshots recording
-        id: screenshotsRecording
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
+
+      - name: Screenshots recording
+        id: screenshotsRecording
         run: |
           touch logcat_screenshots.log
           chmod 777 logcat_screenshots.log
           adb logcat > logcat_screenshots.log &
           ./scripts/generate_screenshots.sh
           changedFiles=`git status --porcelain` && echo "CHANGED_FILES=${changedFiles//$'\n'/'%0A'}" >> $GITHUB_OUTPUT
-
-#      - name: AVD cache
-#        uses: actions/cache@v3
-#        id: avd-cache-screenshots
-#        with:
-#          path: |
-#            ~/.android/avd/*
-#            ~/.android/adb*
-#          key: avd-${{ env.api-level }}
-#
-#      - name: Delete existing screenshots
-#        run: |
-#          rm -rf docs/view/*/screenshots/*
-#          rm -rf docs/compose/*/screenshots/*
-#
-#      - name: create AVD and generate snapshot for caching
-#        if: steps.avd-cache-screenshots.outputs.cache-hit != 'true'
-#        uses: reactivecircus/android-emulator-runner@v2
-#        with:
-#          profile: pixel
-#          sdcard-path-or-size: 512M
-#          api-level: ${{ env.screenshot-level }}
-#          target: default
-#          arch: x86_64
-#          force-avd-creation: false
-#          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-#          disable-animations: false
-#          script: echo "Generated AVD snapshot for caching."
 
       - name: Upload Logcat Logs
         if: ${{ failure() }}
