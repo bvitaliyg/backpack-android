@@ -286,6 +286,7 @@ jobs:
       - name: Screenshots recording
         id: screenshotsRecording
         run: |
+          export JAVA_HOME=~/hostedtoolcache/Java_Adopt_jdk/11.0.17-8/x64/Contents/Home
           touch logcat_screenshots.log
           chmod 777 logcat_screenshots.log
           adb logcat > logcat_screenshots.log &
