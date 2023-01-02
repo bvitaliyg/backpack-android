@@ -276,12 +276,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up JDK 11
+      - name: Screenshots recording
+        id: screenshotsRecording
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
+        run: |
+          touch logcat_screenshots.log
+          chmod 777 logcat_screenshots.log
+          adb logcat > logcat_screenshots.log &
+          ./scripts/generate_screenshots.sh
+          changedFiles=`git status --porcelain` && echo "CHANGED_FILES=${changedFiles//$'\n'/'%0A'}" >> $GITHUB_OUTPUT
 
 #      - name: AVD cache
 #        uses: actions/cache@v3
@@ -310,15 +317,6 @@ jobs:
 #          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
 #          disable-animations: false
 #          script: echo "Generated AVD snapshot for caching."
-
-      - name: Screenshots recording
-        id: screenshotsRecording
-        run: |
-          touch logcat_screenshots.log
-          chmod 777 logcat_screenshots.log
-          adb logcat > logcat_screenshots.log &
-          ./scripts/generate_screenshots.sh
-          changedFiles=`git status --porcelain` && echo "CHANGED_FILES=${changedFiles//$'\n'/'%0A'}" >> $GITHUB_OUTPUT
 
       - name: Upload Logcat Logs
         if: ${{ failure() }}
