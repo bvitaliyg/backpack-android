@@ -61,7 +61,6 @@ class BpkTestRunner : ShotTestRunner() {
     BpkTestVariant.current.newActivity(super.newActivity(cl, className, intent))
 
   private fun Activity.hideNavBar() {
-    window.insetsController
     val flags: Int = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
       or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
       or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
