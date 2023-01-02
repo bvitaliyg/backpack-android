@@ -23,8 +23,10 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.split
 import android.view.View
 import com.karumi.shot.ShotTestRunner
+import java.util.concurrent.TimeUnit
 
 @Suppress("unused")
 class BpkTestRunner : ShotTestRunner() {
@@ -40,6 +42,7 @@ class BpkTestRunner : ShotTestRunner() {
   @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
   override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application =
     super.newApplication(cl, className, context).apply {
+      setupDemoMode()
       registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
         override fun onActivityPaused(activity: Activity) {}
         override fun onActivityResumed(activity: Activity) {}
@@ -49,16 +52,51 @@ class BpkTestRunner : ShotTestRunner() {
         override fun onActivityStopped(activity: Activity) {}
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
           BpkTestVariant.current.applyToActivity(activity)
-          val flags: Int = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-
-          activity.window.decorView.systemUiVisibility = flags
+          activity.hideNavBar()
         }
       })
     }
 
   override fun newActivity(cl: ClassLoader?, className: String?, intent: Intent?): Activity =
     BpkTestVariant.current.newActivity(super.newActivity(cl, className, intent))
+
+  private fun Activity.hideNavBar() {
+    window.insetsController
+    val flags: Int = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+      or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+      or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+      or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
+    window.decorView.systemUiVisibility = flags
+  }
+
+  private fun Application.setupDemoMode() {
+//    runCommand("settings put global sysui_demo_allowed 1")
+//    amBroadcast("command", "enter")
+//    amBroadcast("command", "clock", "hhmm", "1010")
+//    amBroadcast("command", "battery", "plugged", "false")
+//    amBroadcast("command", "battery", "level", "100")
+//    amBroadcast("command", "network", "wifi", "show", "level", "4")
+//    amBroadcast("command", "network", "mobile", "show", "datatype", "none", "level", "4")
+//    amBroadcast("command", "notifications", "visible", "false")
+  }
+
+  private fun Application.amBroadcast(vararg values: String) {
+    Intent()
+      .apply {
+        action = "com.android.systemui.demo"
+        values
+          .toList()
+          .chunked(2)
+          .forEach { putExtra(it.first(), it.lastOrNull()) }
+      }.let { sendBroadcast(it)}
+  }
+
+  private fun runCommand(command: String) {
+    ProcessBuilder(command)
+      .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+      .redirectError(ProcessBuilder.Redirect.INHERIT)
+      .start()
+      .waitFor(60, TimeUnit.MINUTES)
+  }
 }
